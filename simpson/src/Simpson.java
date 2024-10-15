@@ -1,7 +1,9 @@
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 
+import java.sql.SQLOutput;
 import java.util.Random;//asi es como se importa una funcion de la libreria de java en este caso la funcion se llama Random
+import java.util.Scanner;
 
 public class Simpson {
     //todo lo que se ponga en el corchete mayor se podra usar en todos las diferentes cajas
@@ -9,6 +11,8 @@ public class Simpson {
     private static final int MAX_FILA_T = 10;//ponemos un valor maximo de filas
     private static final int MAX_COLUMNA_T = 10;//ponemos un valor maximo de COLUMNAS
     private static char[][] tablero;//definimos que tablero es una matriz
+    private static int filaBart;
+    private static int columnaBart;
 
     // defini estas lineas de codigo para no tener que tener que escribirlas todo el rato y solo llamandolo por un nombre
     private static void printtablero() {
@@ -31,8 +35,8 @@ public class Simpson {
     private static void AsignarBartACasillaLibre(char caracter,int numRepeticiones){
         Random aleatorio = new Random();//traemos la funcion Random de la libreria de java
         //esto nos dara 2 valores de fila y columna para usarlo como una coordenada de una posicion aleatoria
-        int filaAleatorio;
-        int columnaAleatorio;
+        int filaAleatorio = -1;
+        int columnaAleatorio = -1;
         for (int i = 0; i < numRepeticiones; i++) {
         do {
             filaAleatorio = aleatorio.nextInt(MAX_FILA_T);//ira del 0-9 por que la matriz es de 10 valores
@@ -40,6 +44,10 @@ public class Simpson {
         }while (tablero[filaAleatorio][columnaAleatorio] !='L');
         tablero[filaAleatorio][columnaAleatorio] = caracter;//ponemos a bart dentro de una posicion aleatoria
     }
+        if (caracter=='B'){
+            filaBart = filaAleatorio;
+            columnaBart =columnaAleatorio;
+        }
     }
     private static void AsignarHomeroACasillasLibres(char caracter, int numRepeticiones) {
         Random aleatorio = new Random();
@@ -85,5 +93,82 @@ public class Simpson {
         printtablero();
             tablero[MAX_FILA_T - 1][MAX_COLUMNA_T - 1]= 'F';//ponemos la F en la posicion (9,9) para el final del juego
         printtablero();
+
+        /*desplazamiento de bart*/
+        Scanner lector = new Scanner(System.in);
+        int vidas = 10;
+        do {
+
+            System.out.println("diuime el desplazamiento que quieres realizar");
+            System.out.println("A --> izquierda, d --> derecha, w --> arriba, s --> abajo");
+            String desplazamiento = lector.nextLine();
+            System.out.println("desplazamiento= " + desplazamiento);
+
+        switch (desplazamiento){
+            case "A":// mover a la izquierda y liberar la casilla donde se encontraba
+                if ((columnaBart - 1 ) >= 0){
+                    columnaBart = columnaBart -1;
+                     switch (tablero[filaBart][columnaBart]){
+                        case 'H':
+                            vidas=vidas-1;
+                            System.out.println("has perdido una vida= " + vidas);
+                            break;
+                        case 'L':
+                             tablero[filaBart][columnaBart]= 'B';
+                             tablero[filaBart][columnaBart+1]= 'L';
+                             break;
+                        case 'M':
+                            System.out.println("El muro no te deja desplazarte ");
+                            columnaBart=columnaBart+1;
+                            break;
+                    }
+                    tablero[filaBart][columnaBart]= 'B';
+                    tablero[filaBart][columnaBart+1]= 'L';
+                }else {
+                    System.out.println("Desplazammiento prohibido.Limite del tablero");
+                }
+
+                break;
+            case "S":// mover a la abajo y liberar la casilla donde se encontraba
+                if ((filaBart + 1 ) >= 0){
+                    filaBart = filaBart +1;
+                    switch (tablero[filaBart][columnaBart]){
+                        case 'H':
+                            vidas=vidas-1;
+                            System.out.println("has perdido una vida= " + vidas);
+                            break;
+                        case 'L':
+                            tablero[filaBart][columnaBart]= 'B';
+                            tablero[filaBart-1][columnaBart]= 'L';
+                            break;
+                        case 'M':
+                            System.out.println("El muro no te deja desplazarte ");
+                            filaBart=filaBart-1;
+                            break;
+                    }
+                    tablero[filaBart][columnaBart]= 'B';
+                    tablero[filaBart-1][columnaBart]= 'L';
+                }else {
+                    System.out.println("Desplazammiento prohibido.Limite del tablero");
+                }
+                break;
+            case "D":// mover a la derecha y liberar la casilla donde se encontraba
+                filaBart = filaBart;
+                columnaBart = columnaBart -1;
+                tablero[filaBart][columnaBart]= 'B';
+                tablero[filaBart][columnaBart+1]= 'L';
+                break;
+            case "W":// mover a la arriba y liberar la casilla donde se encontraba
+                filaBart = filaBart -1;
+                columnaBart = columnaBart ;
+                tablero[filaBart][columnaBart]= 'B';
+                tablero[filaBart][columnaBart]= 'L';
+                break;
+            default:
+                break;
+        }
+            printtablero();
+    }while(vidas > 0);
+
     }
 }
