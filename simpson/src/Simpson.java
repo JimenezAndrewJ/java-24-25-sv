@@ -1,7 +1,7 @@
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 
-import java.sql.SQLOutput;
+
 import java.util.Random;//asi es como se importa una funcion de la libreria de java en este caso la funcion se llama Random
 import java.util.Scanner;
 
@@ -130,7 +130,7 @@ public class Simpson {
 
                 break;
             case "S":// mover a la abajo y liberar la casilla donde se encontraba
-                if ((filaBart + 1 ) >= 0){
+                if ((filaBart - 1 ) >= 0){
                     filaBart = filaBart +1;
                     switch (tablero[filaBart][columnaBart]){
                         case 'H':
