@@ -12,11 +12,10 @@ public class Main {
         Random ale = new Random();
 
         for (int j = 0; j < 9; j++) {
-            prim = 10 * (j+1);
+
             for (int i = 0; i < 3; i++) {
-                segu =  ale.nextInt(9);
-                casilla = prim + segu;
-                tabla[i][j]= casilla;
+                segu =  ale.nextInt(10 * (j+1),10 * (j+1)+10);
+                tabla[i][j]= segu;
             }
         }
         for (int i = 0; i < 3; i++) {
@@ -29,6 +28,7 @@ public class Main {
         System.out.println(" ");
         System.out.println(" ");
         int columna= 0;
+        for (int k = 0; k < 2; k++) {
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 9; j++) {
                 if (tabla[i][j] > tabla[i+1][j]){
@@ -37,6 +37,7 @@ public class Main {
                 tabla[i+1][j]= temp;
                 }
             }
+        }
         }
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
