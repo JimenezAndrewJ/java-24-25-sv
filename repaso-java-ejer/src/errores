@@ -1,0 +1,14 @@
+        pestaña 10:
+int i = 1; i < numeros.length()
+el error esta en que el int I tiene que ser 0 y numeros.length no tiene que tener parentesis.
+        pestaña 11
+cadena1.equals(cadena2)
+el error esta en que para cadenas no se usa == se usa la funcion equals
+        pestaña 13
+El error esta en que la matriz es una de (2,1) por que en java se empieza a contar la fila desde 0
+ es decir nos pide la [2][2] pero al empezar desde 0 nunca encontrara ese valor por que no existe
+        pestaña 14
+El valor de A es 14 por que el valor actual que tiene "a" cambiara sin ser usado, el valor "b" no podra sumarse
+ por que al tener el ++ delante se suma despues de realizar la operacion y el valor de "c" se le añadira un +1 por
+ que tiene los ++ antes eso en java significa que se implementara antes de empezar la operacion
+ B = 5, C = 9, A = B + C = 14
