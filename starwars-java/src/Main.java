@@ -1,10 +1,6 @@
 import java.util.Random;
 import java.util.Scanner;
-
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
 public class Main {
-
     private static final int Fila= 10;
     private static final int Columna= 10;
     private static final int Obstaculos= 5;
@@ -122,7 +118,7 @@ public class Main {
             System.out.println("Dame la dirreccion");
             String leer = sc.nextLine();
         System.out.println("Dame el numero de movimientos (solo funciona con AWDS)");
-            int nUsu=3;
+            int nUsu=1;
 
           //  while (turnos==false) {
         System.out.println("Turno YODA");
@@ -278,6 +274,9 @@ public class Main {
                                     break;
                                 case "F":
                                     System.out.println("Fin");
+                                    tableroYoda[filaY][columnaY] = "L";
+                                    filaY += nUsu;
+                                    tableroYoda[filaY][columnaY] = "Y";
                                     break;
                             }
                         }
@@ -312,8 +311,6 @@ public class Main {
                                         System.out.println("Fin");
                                         break;
                             }
-
-
                         }else{
                                 switch (tableroYoda[filaY-nUsu][columnaY]){
                                     case "M":
@@ -331,19 +328,169 @@ public class Main {
                                         filaY -= nUsu;
                                         tableroYoda[filaY][columnaY] = "Y";
                                         break;
+                                    case "F":
+                                        System.out.println("Fin");
+                                        tableroYoda[filaY][columnaY] = "L";
+                                        filaY -= nUsu;
+                                        tableroYoda[filaY][columnaY] = "Y";
+                                        break;
                                 }
                         }
                         break;
                     case "Q":
+                        int fuerarango= filaY - nUsu ;
+                        int fuerarango2 = columnaY - nUsu;
+                        if ((filaY -nUsu) < 0||(columnaY -nUsu) < 0){
+                        if ((filaY -nUsu) < 0) {//(columnaY -nUsu) < 0
+                            fuerarango = nUsu - filaY;
+                            int limite =0 ;
 
-                        break;
-                    case "R":
+                            if (fuerarango != 10) {
+                                limite = 10 - fuerarango;
+                                fuerarango= limite;
+                            }}
 
+                        if ((columnaY -nUsu) < 0) {
+                            fuerarango2 = nUsu - columnaY;
+                            int limite2 = 0;
+                            if (fuerarango2 != 10) {
+                                limite2 = 10 - fuerarango2;
+                                fuerarango2 = limite2;
+                            }
+                        }
+                            switch (tableroYoda[fuerarango][fuerarango2]){
+                                case "L":
+                                    tableroYoda[filaY][columnaY] = "L";
+                                    filaY = fuerarango;
+                                    columnaY=fuerarango2;
+                                    tableroYoda[filaY][columnaY] = "Y";
+                                    break;
+                                case "M":
+                                    System.out.println("no se puede mover");
+                                    break;
+                                case "D":
+                                    vidasY -= 1;
+                                    System.out.println("Pisaste un Dark te quedan" + vidasY + "vidas");
+                                    tableroYoda[filaY][columnaY] = "L";
+                                    filaY = fuerarango;
+                                    columnaY= fuerarango2;
+                                    tableroYoda[filaY][columnaY] = "Y";
+                                    break;
+                                case "F":
+                                    System.out.println("Fin");
+                                    filaY = fuerarango;
+                                    columnaY= fuerarango2;
+                                    break;
+                            }
+                        }else{
+                            switch (tableroYoda[fuerarango][fuerarango2]){
+                                case "M":
+                                    System.out.println("no se puede mover");
+                                    break;
+                                case "D":
+                                    vidasY -= 1;
+                                    System.out.println("Pisaste un Dark te quedan" + vidasY + "vidas");
+                                    tableroYoda[filaY][columnaY] = "L";
+                                    filaY -= nUsu;
+                                    columnaY -= nUsu;
+                                    tableroYoda[filaY][columnaY] = "Y";
+                                    break;
+                                case "L":
+                                    tableroYoda[filaY][columnaY] = "L";
+                                    filaY -= nUsu;
+                                    columnaY -= nUsu;
+                                    tableroYoda[filaY][columnaY] = "Y";
+                                    break;
+                                case "F":
+                                    System.out.println("Fin");
+                                    tableroYoda[filaY][columnaY] = "L";
+                                    filaY -= nUsu;
+                                    columnaY -= nUsu;
+                                    tableroYoda[filaY][columnaY] = "Y";
+                                    break;
+                            }
+                        }
                         break;
                     case "E":
+                         fuerarango= filaY - nUsu ;
+                         fuerarango2 = columnaY + nUsu;
+                        if ((filaY -nUsu) < 0||(columnaY +nUsu) >= 10){
+                            if ((filaY -nUsu) < 0) {//(columnaY -nUsu) < 0
+                                fuerarango = nUsu - filaY;
+                                int limite =0 ;
+
+                                if (fuerarango != 10) {
+                                    limite = 10 - fuerarango;
+                                    fuerarango= limite;
+                                }}
+
+                            if ((columnaY + nUsu) >= 10) {
+                                fuerarango2 = nUsu + columnaY;
+                                int limite2 = 0;
+                                if (fuerarango2 != 10) {
+                                    limite2 =  fuerarango2-10;
+                                    fuerarango2 = limite2;
+                                }
+                            }
+                            switch (tableroYoda[fuerarango][fuerarango2]){
+                                case "L":
+                                    tableroYoda[filaY][columnaY] = "L";
+                                    filaY = fuerarango;
+                                    columnaY=fuerarango2;
+                                    tableroYoda[filaY][columnaY] = "Y";
+                                    break;
+                                case "M":
+                                    System.out.println("no se puede mover");
+                                    break;
+                                case "D":
+                                    vidasY -= 1;
+                                    System.out.println("Pisaste un Dark te quedan" + vidasY + "vidas");
+                                    tableroYoda[filaY][columnaY] = "L";
+                                    filaY = fuerarango;
+                                    columnaY= fuerarango2;
+                                    tableroYoda[filaY][columnaY] = "Y";
+                                    break;
+                                case "F":
+                                    System.out.println("Fin");
+                                    tableroYoda[filaY][columnaY] = "L";
+                                    filaY = fuerarango;
+                                    columnaY= fuerarango2;
+                                    tableroYoda[filaY][columnaY] = "Y";
+                                    break;
+                            }
+                        }else{
+                            switch (tableroYoda[fuerarango][fuerarango2]){
+                                case "M":
+                                    System.out.println("no se puede mover");
+                                    break;
+                                case "D":
+                                    vidasY -= 1;
+                                    System.out.println("Pisaste un Dark te quedan" + vidasY + "vidas");
+                                    tableroYoda[filaY][columnaY] = "L";
+                                    filaY = fuerarango;
+                                    columnaY =fuerarango2;
+                                    tableroYoda[filaY][columnaY] = "Y";
+                                    break;
+                                case "L":
+                                    tableroYoda[filaY][columnaY] = "L";
+                                    filaY = fuerarango;
+                                    columnaY =fuerarango2;
+                                    tableroYoda[filaY][columnaY] = "Y";
+                                    break;
+                                case "F":
+                                    System.out.println("Fin");
+                                    tableroYoda[filaY][columnaY] = "L";
+                                    filaY = fuerarango;
+                                    columnaY= fuerarango2;
+                                    tableroYoda[filaY][columnaY] = "Y";
+                                    break;
+                            }
+                        }
+                        break;
+                    case "Z":
 
                         break;
-                    case "B":
+                    case "C":
 
                         break;
 
