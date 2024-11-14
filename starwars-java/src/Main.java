@@ -10,12 +10,15 @@ public class Main {
     private static int columnaY;
     private static int filaD;
     private static int columnaD;
+    private static int fuerarango;
+    private static int fuerarango2;
+
 
     private static String[][] tableroYoda = new String[Fila][Columna];
     private static String[][] tableroDark = new String[Fila][Columna];
     static Random random = new Random();
     static Scanner sc = new Scanner(System.in);
-    static boolean turnos = false;
+    static boolean turnos;
 
 
     private static void tableroL() {//Llenar tableros de L
@@ -67,7 +70,7 @@ public class Main {
         tableroDark[filaD][columnaD] = "V";
     }
 
-    private static void LlenarObstaculoM(String Muro, String Vader, String Yoda) {
+    private static void LlenarObstaculoM(String Muro, String Vader, String Yoda, String Poti) {
         int filaM;
         int columnaM;
         //llenar tabla de muros
@@ -102,14 +105,29 @@ public class Main {
             } while (tableroYoda[filaM][columnaM] != "L");
             tableroYoda[filaM][columnaM] = Yoda;
         }
+        for (int i = 0; i < Obstaculos; i++) {
+            do {
+                filaM = random.nextInt(10 - 1);
+                columnaM = random.nextInt(10 - 1);
+            } while (tableroYoda[filaM][columnaM] != "L");
+            tableroYoda[filaM][columnaM] = Poti;
+        }
+        for (int i = 0; i < Obstaculos; i++) {
+            do {
+                filaM = random.nextInt(10 - 1);
+                columnaM = random.nextInt(10 - 1);
+            } while (tableroDark[filaM][columnaM] != "L");
+            tableroDark[filaM][columnaM] = Poti;
+        }
     }
+
 
 
     public static void main(String[] args) {
 
         tableroL();
         fin();
-        LlenarObstaculoM("M", "R", "D");
+        LlenarObstaculoM("M", "R", "D","P");
         LlenarJugador();
 
 
@@ -128,218 +146,176 @@ public class Main {
 
                 switch (leer) {
                     case "A":
+                        fuerarango2 = columnaY - nUsu;
                         if ((columnaY - nUsu) < 0) {
-                            int fuerarango = nUsu - columnaY;
-                            int limite = 0;
-                            if (fuerarango != 10) {
-                                limite = 10 - fuerarango;
-                            }
+                            fuerarango2 = nUsu + columnaY;
+                            int limite2 = 0;
 
-                            switch (tableroYoda[filaY][limite]) {
-                                case "D":
-                                    vidasY -= 1;
-                                    System.out.println("Pisaste un Dark te quedan" + vidasY + "vidas");
-                                    tableroYoda[filaY][columnaY] = "L";
-                                    columnaY = limite;
-                                    tableroYoda[filaY][columnaY] = "Y";
-                                    break;
-                                case "L":
-                                    tableroYoda[filaY][columnaY] = "L";
-                                    columnaY = limite;
-                                    tableroYoda[filaY][columnaY] = "Y";
-                                    break;
-                                case "M":
-                                    System.out.println("no se puede mover");
-                                    break;
-                                case "F":
-                                    System.out.println("Fin");
-                                    break;
-                            }
-
-                        } else {
-
-                            switch (tableroYoda[filaY][columnaY - nUsu]) {
-                                case "D":
-                                    vidasY -= 1;
-                                    System.out.println("Pisaste un Dark te quedan" + vidasY + "vidas");
-                                    tableroYoda[filaY][columnaY] = "L";
-                                    columnaY = columnaY - nUsu;
-                                    tableroYoda[filaY][columnaY] = "Y";
-                                    break;
-                                case "L":
-                                    tableroYoda[filaY][columnaY] = "L";
-                                    columnaY = columnaY - nUsu;
-                                    tableroYoda[filaY][columnaY] = "Y";
-                                    break;
-                                case "M":
-                                    System.out.println("no se puede mover");
-                                    break;
-                                case "F":
-                                    System.out.println("Fin");
-                                    break;
+                            if (fuerarango2 != 10) {
+                                limite2 = 10 - fuerarango2;
+                                fuerarango2 = limite2;
                             }
                         }
+
+                            switch (tableroYoda[filaY][fuerarango2]) {
+                                case "D":
+                                    vidasY -= 1;
+                                    System.out.println("Pisaste un Dark te quedan" + vidasY + "vidas");
+                                    tableroYoda[filaY][columnaY] = "L";
+                                    columnaY = fuerarango2;
+                                    tableroYoda[filaY][columnaY] = "Y";
+                                    break;
+                                case "L":
+                                    tableroYoda[filaY][columnaY] = "L";
+                                    columnaY = fuerarango2;
+                                    tableroYoda[filaY][columnaY] = "Y";
+                                    break;
+                                case "M":
+                                    System.out.println("no se puede mover");
+                                    break;
+                                case "F":
+                                    System.out.println("Fin");
+                                    break;
+                                case "P":
+                                    tableroYoda[filaY][columnaY] = "L";
+                                    int filaYAletoria;
+                                    int columnaYAletoria;
+                                    do {
+                                       filaYAletoria= random.nextInt(9);
+                                       columnaYAletoria= random.nextInt(9);
+                                    }while (tableroYoda[filaYAletoria][columnaYAletoria]!= "L");
+                                    tableroYoda[filaYAletoria][columnaYAletoria] = "Y";
+                                    break;
+
+                            }
 
                         break;
                     case "D":
+                        fuerarango2 = columnaY + nUsu;
                         if ((columnaY + nUsu) >= 10) {
-                            int fuerarango = nUsu + columnaY;
-                            int limite = 0;
-                            if (fuerarango != 10) {
-                                limite = fuerarango - 10;
-                            }
-
-                            switch (tableroYoda[filaY][limite]) {
-                                case "D":
-                                    vidasY -= 1;
-                                    System.out.println("Pisaste un Dark te quedan" + vidasY + "vidas");
-                                    tableroYoda[filaY][columnaY] = "L";
-                                    columnaY = limite;
-                                    tableroYoda[filaY][columnaY] = "Y";
-                                    break;
-                                case "L":
-                                    tableroYoda[filaY][columnaY] = "L";
-                                    columnaY = limite;
-                                    tableroYoda[filaY][columnaY] = "Y";
-                                    break;
-                                case "M":
-                                    System.out.println("no se puede mover");
-                                    break;
-                                case "F":
-                                    System.out.println("Fin");
-                                    break;
-                            }
-
-                        } else {
-
-                            switch (tableroYoda[filaY][columnaY + nUsu]) {
-                                case "D":
-                                    vidasY -= 1;
-                                    System.out.println("Pisaste un Dark te quedan" + vidasY + "vidas");
-                                    tableroYoda[filaY][columnaY] = "L";
-                                    columnaY = columnaY + nUsu;
-                                    tableroYoda[filaY][columnaY] = "Y";
-                                    break;
-                                case "L":
-                                    tableroYoda[filaY][columnaY] = "L";
-                                    columnaY = columnaY + nUsu;
-                                    tableroYoda[filaY][columnaY] = "Y";
-                                    break;
-                                case "M":
-                                    System.out.println("no se puede mover");
-                                    break;
-                                case "F":
-                                    System.out.println("Fin");
-                                    break;
+                            fuerarango2 = nUsu + columnaY;
+                            int limite2 = 0;
+                            if (fuerarango2 != 10) {
+                                limite2 = fuerarango2 - 10;
+                                fuerarango2 = limite2;
                             }
                         }
+
+                            switch (tableroYoda[filaY][fuerarango2]) {
+                                case "D":
+                                    vidasY -= 1;
+                                    System.out.println("Pisaste un Dark te quedan" + vidasY + "vidas");
+                                    tableroYoda[filaY][columnaY] = "L";
+                                    columnaY = fuerarango2;
+                                    tableroYoda[filaY][columnaY] = "Y";
+                                    break;
+                                case "L":
+                                    tableroYoda[filaY][columnaY] = "L";
+                                    columnaY = fuerarango2;
+                                    tableroYoda[filaY][columnaY] = "Y";
+                                    break;
+                                case "M":
+                                    System.out.println("no se puede mover");
+                                    break;
+                                case "F":
+                                    System.out.println("Fin");
+                                    break;
+                                case "P":
+                                    tableroYoda[filaY][columnaY] = "L";
+                                    int filaYAletoria;
+                                    int columnaYAletoria;
+                                    do {
+                                        filaYAletoria= random.nextInt(9);
+                                        columnaYAletoria= random.nextInt(9);
+                                    }while (tableroYoda[filaYAletoria][columnaYAletoria]!= "L");
+                                    tableroYoda[filaYAletoria][columnaYAletoria] = "Y";
+                                    break;
+                            }
                         break;
                     case "S":
+                        fuerarango = filaY + nUsu;
                         if ((filaY + nUsu) >= 10) {
-                            int fuerarango = nUsu + filaY;
-                            int limite = fuerarango - 10;
+                            fuerarango = filaY + nUsu;
+                            int limite = 0;
 
-                            switch (tableroYoda[limite][columnaY]) {
-                                case "D":
-                                    vidasY -= 1;
-                                    System.out.println("Pisaste un Dark te quedan" + vidasY + "vidas");
-                                    tableroYoda[filaY][columnaY] = "L";
-                                    filaY = limite;
-                                    tableroYoda[filaY][columnaY] = "Y";
-                                    break;
-                                case "L":
-                                    tableroYoda[filaY][columnaY] = "L";
-                                    filaY = limite;
-                                    tableroYoda[filaY][columnaY] = "Y";
-                                    break;
-                                case "M":
-                                    System.out.println("no se puede mover");
-                                    break;
-                                case "F":
-                                    System.out.println("Fin");
-                                    break;
-                            }
-                        } else {
-                            switch (tableroYoda[filaY + nUsu][columnaY]) {
-                                case "D":
-                                    vidasY -= 1;
-                                    System.out.println("Pisaste un Dark te quedan" + vidasY + "vidas");
-                                    tableroYoda[filaY][columnaY] = "L";
-                                    filaY += nUsu;
-                                    tableroYoda[filaY][columnaY] = "Y";
-                                    break;
-                                case "L":
-                                    tableroYoda[filaY][columnaY] = "L";
-                                    filaY += nUsu;
-                                    tableroYoda[filaY][columnaY] = "Y";
-                                    break;
-                                case "M":
-                                    System.out.println("no se puede mover");
-                                    break;
-                                case "F":
-                                    System.out.println("Fin");
-                                    tableroYoda[filaY][columnaY] = "L";
-                                    filaY += nUsu;
-                                    tableroYoda[filaY][columnaY] = "Y";
-                                    break;
+                            if (fuerarango >= 10) {
+                                limite = fuerarango - 10;
+                                fuerarango = limite;
                             }
                         }
 
-
+                            switch (tableroYoda[fuerarango][columnaY]) {
+                                case "D":
+                                    vidasY -= 1;
+                                    System.out.println("Pisaste un Dark te quedan" + vidasY + "vidas");
+                                    tableroYoda[filaY][columnaY] = "L";
+                                    filaY = fuerarango;
+                                    tableroYoda[filaY][columnaY] = "Y";
+                                    break;
+                                case "L":
+                                    tableroYoda[filaY][columnaY] = "L";
+                                    filaY = fuerarango;
+                                    tableroYoda[filaY][columnaY] = "Y";
+                                    break;
+                                case "M":
+                                    System.out.println("no se puede mover");
+                                    break;
+                                case "F":
+                                    System.out.println("Fin");
+                                    break;
+                                case "P":
+                                    tableroYoda[filaY][columnaY] = "L";
+                                    int filaYAletoria;
+                                    int columnaYAletoria;
+                                    do {
+                                        filaYAletoria= random.nextInt(9);
+                                        columnaYAletoria= random.nextInt(9);
+                                    }while (tableroYoda[filaYAletoria][columnaYAletoria]!= "L");
+                                    tableroYoda[filaYAletoria][columnaYAletoria] = "Y";
+                                    break;
+                            }
                         break;
                     case "W":
+                        fuerarango = filaY - nUsu;
                         if ((filaY - nUsu) < 0) {
-                            int fuerarango = nUsu - filaY;
+                            fuerarango = nUsu - filaY;
                             int limite = 0;
+
                             if (fuerarango != 10) {
                                 limite = 10 - fuerarango;
-                            }
-
-                            switch (tableroYoda[limite][columnaY]) {
-                                case "L":
-                                    tableroYoda[filaY][columnaY] = "L";
-                                    filaY = limite;
-                                    tableroYoda[filaY][columnaY] = "Y";
-                                    break;
-                                case "M":
-                                    System.out.println("no se puede mover");
-                                    break;
-                                case "D":
-                                    vidasY -= 1;
-                                    System.out.println("Pisaste un Dark te quedan" + vidasY + "vidas");
-                                    tableroYoda[filaY][columnaY] = "L";
-                                    filaY = limite;
-                                    tableroYoda[filaY][columnaY] = "Y";
-                                    break;
-                                case "F":
-                                    System.out.println("Fin");
-                                    break;
-                            }
-                        } else {
-                            switch (tableroYoda[filaY - nUsu][columnaY]) {
-                                case "M":
-                                    System.out.println("no se puede mover");
-                                    break;
-                                case "D":
-                                    vidasY -= 1;
-                                    System.out.println("Pisaste un Dark te quedan" + vidasY + "vidas");
-                                    tableroYoda[filaY][columnaY] = "L";
-                                    filaY -= nUsu;
-                                    tableroYoda[filaY][columnaY] = "Y";
-                                    break;
-                                case "L":
-                                    tableroYoda[filaY][columnaY] = "L";
-                                    filaY -= nUsu;
-                                    tableroYoda[filaY][columnaY] = "Y";
-                                    break;
-                                case "F":
-                                    System.out.println("Fin");
-                                    tableroYoda[filaY][columnaY] = "L";
-                                    filaY -= nUsu;
-                                    tableroYoda[filaY][columnaY] = "Y";
-                                    break;
+                                fuerarango = limite;
                             }
                         }
+                            switch (tableroYoda[fuerarango][columnaY]) {
+                                case "L":
+                                    tableroYoda[filaY][columnaY] = "L";
+                                    filaY = fuerarango;
+                                    tableroYoda[filaY][columnaY] = "Y";
+                                    break;
+                                case "M":
+                                    System.out.println("no se puede mover");
+                                    break;
+                                case "D":
+                                    vidasY -= 1;
+                                    System.out.println("Pisaste un Dark te quedan" + vidasY + "vidas");
+                                    tableroYoda[filaY][columnaY] = "L";
+                                    filaY = fuerarango;
+                                    tableroYoda[filaY][columnaY] = "Y";
+                                    break;
+                                case "F":
+                                    System.out.println("Fin");
+                                    break;
+                                case "P":
+                                    tableroYoda[filaY][columnaY] = "L";
+                                    int filaYAletoria;
+                                    int columnaYAletoria;
+                                    do {
+                                        filaYAletoria= random.nextInt(9);
+                                        columnaYAletoria= random.nextInt(9);
+                                    }while (tableroYoda[filaYAletoria][columnaYAletoria]!= "L");
+                                    tableroYoda[filaYAletoria][columnaYAletoria] = "Y";
+                                    break;
+                            }
                         break;
                     case "Q":
                         int fuerarango = filaY - nUsu;
@@ -384,6 +360,16 @@ public class Main {
                                 System.out.println("Fin");
                                 filaY = fuerarango;
                                 columnaY = fuerarango2;
+                                break;
+                            case "P":
+                                tableroYoda[filaY][columnaY] = "L";
+                                int filaYAletoria;
+                                int columnaYAletoria;
+                                do {
+                                    filaYAletoria= random.nextInt(9);
+                                    columnaYAletoria= random.nextInt(9);
+                                }while (tableroYoda[filaYAletoria][columnaYAletoria]!= "L");
+                                tableroYoda[filaYAletoria][columnaYAletoria] = "Y";
                                 break;
                         }
 
@@ -434,6 +420,16 @@ public class Main {
                                 columnaY = fuerarango2;
                                 tableroYoda[filaY][columnaY] = "Y";
                                 break;
+                            case "P":
+                                tableroYoda[filaY][columnaY] = "L";
+                                int filaYAletoria;
+                                int columnaYAletoria;
+                                do {
+                                    filaYAletoria= random.nextInt(9);
+                                    columnaYAletoria= random.nextInt(9);
+                                }while (tableroYoda[filaYAletoria][columnaYAletoria]!= "L");
+                                tableroYoda[filaYAletoria][columnaYAletoria] = "Y";
+                                break;
                         }
                         break;
                     case "Z":
@@ -482,6 +478,16 @@ public class Main {
                                 filaY = fuerarango;
                                 columnaY = fuerarango2;
                                 tableroYoda[filaY][columnaY] = "Y";
+                                break;
+                            case "P":
+                                tableroYoda[filaY][columnaY] = "L";
+                                int filaYAletoria;
+                                int columnaYAletoria;
+                                do {
+                                    filaYAletoria= random.nextInt(9);
+                                    columnaYAletoria= random.nextInt(9);
+                                }while (tableroYoda[filaYAletoria][columnaYAletoria]!= "L");
+                                tableroYoda[filaYAletoria][columnaYAletoria] = "Y";
                                 break;
                         }
                         break;
@@ -532,6 +538,16 @@ public class Main {
                                 columnaY = fuerarango2;
                                 tableroYoda[filaY][columnaY] = "Y";
                                 break;
+                            case "P":
+                                tableroYoda[filaY][columnaY] = "L";
+                                int filaYAletoria;
+                                int columnaYAletoria;
+                                do {
+                                    filaYAletoria= random.nextInt(9);
+                                    columnaYAletoria= random.nextInt(9);
+                                }while (tableroYoda[filaYAletoria][columnaYAletoria]!= "L");
+                                tableroYoda[filaYAletoria][columnaYAletoria] = "Y";
+                                break;
                         }
                         break;
 
@@ -546,8 +562,8 @@ public class Main {
                 ImprimirY();
                 System.out.println(filaY + " " + columnaY);
             }
-            ;
-            while (turnos == true) {
+
+            while (turnos) {
                 System.out.println("Turno Vader");
                 imprimirD();
                 System.out.println("Dame la dirreccion");
@@ -556,218 +572,176 @@ public class Main {
                 int nUsu = 1;
                 switch (leer) {
                     case "A":
+                        fuerarango2 = columnaD - nUsu;
                         if ((columnaD - nUsu) < 0) {
-                            int fuerarango = nUsu - columnaD;
-                            int limite = 0;
-                            if (fuerarango != 10) {
-                                limite = 10 - fuerarango;
-                            }
+                            fuerarango2 = nUsu + columnaD;
+                            int limite2 = 0;
 
-                            switch (tableroDark[filaD][limite]) {
-                                case "D":
-                                    vidasV -= 1;
-                                    System.out.println("Pisaste un R2D2 te quedan" + vidasV + "vidas");
-                                    tableroDark[filaD][columnaD] = "L";
-                                    columnaD = limite;
-                                    tableroDark[filaD][columnaD] = "V";
-                                    break;
-                                case "L":
-                                    tableroDark[filaD][columnaD] = "L";
-                                    columnaD = limite;
-                                    tableroDark[filaD][columnaD] = "V";
-                                    break;
-                                case "M":
-                                    System.out.println("no se puede mover");
-                                    break;
-                                case "F":
-                                    System.out.println("Fin");
-                                    break;
-                            }
-
-                        } else {
-
-                            switch (tableroDark[filaD][columnaD - nUsu]) {
-                                case "D":
-                                    vidasV -= 1;
-                                    System.out.println("Pisaste un R2D2 te quedan" + vidasV + "vidas");
-                                    tableroDark[filaD][columnaD] = "L";
-                                    columnaD = columnaD - nUsu;
-                                    tableroDark[filaD][columnaD] = "V";
-                                    break;
-                                case "L":
-                                    tableroDark[filaD][columnaD] = "L";
-                                    columnaD = columnaD - nUsu;
-                                    tableroDark[filaD][columnaD] = "V";
-                                    break;
-                                case "M":
-                                    System.out.println("no se puede mover");
-                                    break;
-                                case "F":
-                                    System.out.println("Fin");
-                                    break;
+                            if (fuerarango2 != 10) {
+                                limite2 = 10 - fuerarango2;
+                                fuerarango2 = limite2;
                             }
                         }
 
+                            switch (tableroDark[filaD][fuerarango2]) {
+                                case "D":
+                                    vidasV -= 1;
+                                    System.out.println("Pisaste un R2D2 te quedan" + vidasV + "vidas");
+                                    tableroDark[filaD][columnaD] = "L";
+                                    columnaD = fuerarango2;
+                                    tableroDark[filaD][columnaD] = "V";
+                                    break;
+                                case "L":
+                                    tableroDark[filaD][columnaD] = "L";
+                                    columnaD = fuerarango2;
+                                    tableroDark[filaD][columnaD] = "V";
+                                    break;
+                                case "M":
+                                    System.out.println("no se puede mover");
+                                    break;
+                                case "F":
+                                    System.out.println("Fin");
+                                    break;
+                                case "P":
+                                    tableroDark[filaD][columnaD] = "L";
+                                    int filaDAletoria;
+                                    int columnaDAletoria;
+                                    do {
+                                        filaDAletoria= random.nextInt(9);
+                                        columnaDAletoria= random.nextInt(9);
+                                    }while (tableroDark[filaDAletoria][columnaDAletoria]!= "L");
+                                    tableroDark[filaDAletoria][columnaDAletoria] = "V";
+                                    break;
+                            }
                         break;
                     case "D":
-                        if ((columnaD + nUsu) >= 10) {
-                            int fuerarango = nUsu + columnaD;
-                            int limite = 0;
-                            if (fuerarango != 10) {
-                                limite = fuerarango - 10;
-                            }
-
-                            switch (tableroDark[filaD][limite]) {
-                                case "D":
-                                    vidasV -= 1;
-                                    System.out.println("Pisaste un R2D2 te quedan" + vidasV + "vidas");
-                                    tableroDark[filaD][columnaD] = "L";
-                                    columnaD = limite;
-                                    tableroDark[filaD][columnaD] = "V";
-                                    break;
-                                case "L":
-                                    tableroDark[filaD][columnaD] = "L";
-                                    columnaD = limite;
-                                    tableroDark[filaD][columnaD] = "V";
-                                    break;
-                                case "M":
-                                    System.out.println("no se puede mover");
-                                    break;
-                                case "F":
-                                    System.out.println("Fin");
-                                    break;
-                            }
-
-                        } else {
-
-                            switch (tableroDark[filaD][columnaD + nUsu]) {
-                                case "D":
-                                    vidasV -= 1;
-                                    System.out.println("Pisaste un R2D2 te quedan" + vidasV + "vidas");
-                                    tableroDark[filaD][columnaD] = "L";
-                                    columnaD = columnaD + nUsu;
-                                    tableroDark[filaD][columnaD] = "V";
-                                    break;
-                                case "L":
-                                    tableroDark[filaD][columnaD] = "L";
-                                    columnaD = columnaD + nUsu;
-                                    tableroDark[filaD][columnaD] = "V";
-                                    break;
-                                case "M":
-                                    System.out.println("no se puede mover");
-                                    break;
-                                case "F":
-                                    System.out.println("Fin");
-                                    break;
+                        fuerarango2 = columnaD + nUsu;
+                        if ((columnaD+ nUsu) >= 10) {
+                            fuerarango2 = nUsu + columnaD;
+                            int limite2 = 0;
+                            if (fuerarango2 != 10) {
+                                limite2 = fuerarango2 - 10;
+                                fuerarango2 = limite2;
                             }
                         }
+                            switch (tableroDark[filaD][fuerarango2]) {
+                                case "D":
+                                    vidasV -= 1;
+                                    System.out.println("Pisaste un R2D2 te quedan" + vidasV + "vidas");
+                                    tableroDark[filaD][columnaD] = "L";
+                                    columnaD = fuerarango2;
+                                    tableroDark[filaD][columnaD] = "V";
+                                    break;
+                                case "L":
+                                    tableroDark[filaD][columnaD] = "L";
+                                    columnaD = fuerarango2;
+                                    tableroDark[filaD][columnaD] = "V";
+                                    break;
+                                case "M":
+                                    System.out.println("no se puede mover");
+                                    break;
+                                case "F":
+                                    System.out.println("Fin");
+                                    break;
+                                case "P":
+                                    tableroDark[filaD][columnaD] = "L";
+                                    int filaDAletoria;
+                                    int columnaDAletoria;
+                                    do {
+                                        filaDAletoria= random.nextInt(9);
+                                        columnaDAletoria= random.nextInt(9);
+                                    }while (tableroDark[filaDAletoria][columnaDAletoria]!= "L");
+                                    tableroDark[filaDAletoria][columnaDAletoria] = "V";
+                                    break;
+                            }
+
                         break;
                     case "S":
+                        fuerarango = filaD + nUsu;
                         if ((filaD + nUsu) >= 10) {
-                            int fuerarango = nUsu + filaD;
-                            int limite = fuerarango - 10;
+                            fuerarango = filaD + nUsu;
+                            int limite = 0;
 
-                            switch (tableroDark[limite][columnaD]) {
-                                case "D":
-                                    vidasV -= 1;
-                                    System.out.println("Pisaste un R2D2 te quedan" + vidasV + "vidas");
-                                    tableroDark[filaD][columnaD] = "L";
-                                    filaD = limite;
-                                    tableroDark[filaD][columnaD] = "V";
-                                    break;
-                                case "L":
-                                    tableroDark[filaD][columnaD] = "L";
-                                    filaD = limite;
-                                    tableroDark[filaD][columnaD] = "V";
-                                    break;
-                                case "M":
-                                    System.out.println("no se puede mover");
-                                    break;
-                                case "F":
-                                    System.out.println("Fin");
-                                    break;
-                            }
-                        } else {
-                            switch (tableroDark[filaD + nUsu][columnaD]) {
-                                case "D":
-                                    vidasV -= 1;
-                                    System.out.println("Pisaste un R2D2 te quedan" + vidasV + "vidas");
-                                    tableroDark[filaD][columnaD] = "L";
-                                    filaD += nUsu;
-                                    tableroDark[filaD][columnaD] = "V";
-                                    break;
-                                case "L":
-                                    tableroDark[filaD][columnaD] = "L";
-                                    filaD += nUsu;
-                                    tableroDark[filaD][columnaD] = "V";
-                                    break;
-                                case "M":
-                                    System.out.println("no se puede mover");
-                                    break;
-                                case "F":
-                                    System.out.println("Fin");
-                                    tableroDark[filaD][columnaD] = "L";
-                                    filaD += nUsu;
-                                    tableroDark[filaD][columnaD] = "V";
-                                    break;
+                            if (fuerarango >= 10) {
+                                limite = fuerarango - 10;
+                                fuerarango = limite;
                             }
                         }
-
+                            switch (tableroDark[fuerarango][columnaD]) {
+                                case "D":
+                                    vidasV -= 1;
+                                    System.out.println("Pisaste un R2D2 te quedan" + vidasV + "vidas");
+                                    tableroDark[filaD][columnaD] = "L";
+                                    filaD = fuerarango;
+                                    tableroDark[filaD][columnaD] = "V";
+                                    break;
+                                case "L":
+                                    tableroDark[filaD][columnaD] = "L";
+                                    filaD = fuerarango;
+                                    tableroDark[filaD][columnaD] = "V";
+                                    break;
+                                case "M":
+                                    System.out.println("no se puede mover");
+                                    break;
+                                case "F":
+                                    System.out.println("Fin");
+                                    break;
+                                case "P":
+                                    tableroDark[filaD][columnaD] = "L";
+                                    int filaDAletoria;
+                                    int columnaDAletoria;
+                                    do {
+                                        filaDAletoria= random.nextInt(9);
+                                        columnaDAletoria= random.nextInt(9);
+                                    }while (tableroDark[filaDAletoria][columnaDAletoria]!= "L");
+                                    tableroDark[filaDAletoria][columnaDAletoria] = "V";
+                                    break;
+                            }
 
                         break;
                     case "W":
+                        fuerarango = filaD - nUsu;
                         if ((filaD - nUsu) < 0) {
-                            int fuerarango = nUsu - filaD;
+                            fuerarango = nUsu - filaD;
                             int limite = 0;
+
                             if (fuerarango != 10) {
                                 limite = 10 - fuerarango;
-                            }
-
-                            switch (tableroDark[limite][columnaD]) {
-                                case "L":
-                                    tableroDark[filaD][columnaD] = "L";
-                                    filaD = limite;
-                                    tableroDark[filaD][columnaD] = "V";
-                                    break;
-                                case "M":
-                                    System.out.println("no se puede mover");
-                                    break;
-                                case "D":
-                                    vidasV -= 1;
-                                    System.out.println("Pisaste un R2D2 te quedan" + vidasV + "vidas");
-                                    tableroDark[filaD][columnaD] = "L";
-                                    filaD = limite;
-                                    tableroDark[filaD][columnaD] = "V";
-                                    break;
-                                case "F":
-                                    System.out.println("Fin");
-                                    break;
-                            }
-                        } else {
-                            switch (tableroDark[filaD - nUsu][columnaD]) {
-                                case "M":
-                                    System.out.println("no se puede mover");
-                                    break;
-                                case "D":
-                                    vidasV -= 1;
-                                    System.out.println("Pisaste un R2D2 te quedan" + vidasV + "vidas");
-                                    tableroDark[filaD][columnaD] = "L";
-                                    filaD -= nUsu;
-                                    tableroDark[filaD][columnaD] = "V";
-                                    break;
-                                case "L":
-                                    tableroDark[filaD][columnaD] = "L";
-                                    filaD -= nUsu;
-                                    tableroDark[filaD][columnaD] = "V";
-                                    break;
-                                case "F":
-                                    System.out.println("Fin");
-                                    tableroDark[filaD][columnaD] = "L";
-                                    filaD -= nUsu;
-                                    tableroDark[filaD][columnaD] = "V";
-                                    break;
+                                fuerarango = limite;
                             }
                         }
+
+                            switch (tableroDark[fuerarango][columnaD]) {
+                                case "L":
+                                    tableroDark[filaD][columnaD] = "L";
+                                    filaD = fuerarango;
+                                    tableroDark[filaD][columnaD] = "V";
+                                    break;
+                                case "M":
+                                    System.out.println("no se puede mover");
+                                    break;
+                                case "D":
+                                    vidasV -= 1;
+                                    System.out.println("Pisaste un R2D2 te quedan" + vidasV + "vidas");
+                                    tableroDark[filaD][columnaD] = "L";
+                                    filaD = fuerarango;
+                                    tableroDark[filaD][columnaD] = "V";
+                                    break;
+                                case "F":
+                                    System.out.println("Fin");
+                                    break;
+                                case "P":
+                                    tableroDark[filaD][columnaD] = "L";
+                                    int filaDAletoria;
+                                    int columnaDAletoria;
+                                    do {
+                                        filaDAletoria= random.nextInt(9);
+                                        columnaDAletoria= random.nextInt(9);
+                                    }while (tableroDark[filaDAletoria][columnaDAletoria]!= "L");
+                                    tableroDark[filaDAletoria][columnaDAletoria] = "V";
+                                    break;
+                            }
+
                         break;
                     case "Q":
                         int fuerarango = filaD - nUsu;
@@ -812,6 +786,16 @@ public class Main {
                                 System.out.println("Fin");
                                 filaD = fuerarango;
                                 columnaD = fuerarango2;
+                                break;
+                            case "P":
+                                tableroDark[filaD][columnaD] = "L";
+                                int filaDAletoria;
+                                int columnaDAletoria;
+                                do {
+                                    filaDAletoria= random.nextInt(9);
+                                    columnaDAletoria= random.nextInt(9);
+                                }while (tableroDark[filaDAletoria][columnaDAletoria]!= "L");
+                                tableroDark[filaDAletoria][columnaDAletoria] = "V";
                                 break;
                         }
 
@@ -862,6 +846,16 @@ public class Main {
                                 columnaD = fuerarango2;
                                 tableroDark[filaD][columnaD] = "V";
                                 break;
+                            case "P":
+                                tableroDark[filaD][columnaD] = "L";
+                                int filaDAletoria;
+                                int columnaDAletoria;
+                                do {
+                                    filaDAletoria= random.nextInt(9);
+                                    columnaDAletoria= random.nextInt(9);
+                                }while (tableroDark[filaDAletoria][columnaDAletoria]!= "L");
+                                tableroDark[filaDAletoria][columnaDAletoria] = "V";
+                                break;
                         }
                         break;
                     case "Z":
@@ -910,6 +904,16 @@ public class Main {
                                 filaD = fuerarango;
                                 columnaD = fuerarango2;
                                 tableroDark[filaD][columnaD] = "V";
+                                break;
+                            case "P":
+                                tableroDark[filaD][columnaD] = "L";
+                                int filaDAletoria;
+                                int columnaDAletoria;
+                                do {
+                                    filaDAletoria= random.nextInt(9);
+                                    columnaDAletoria= random.nextInt(9);
+                                }while (tableroDark[filaDAletoria][columnaDAletoria]!= "L");
+                                tableroDark[filaDAletoria][columnaDAletoria] = "V";
                                 break;
                         }
                         break;
@@ -960,6 +964,16 @@ public class Main {
                                 columnaD = fuerarango2;
                                 tableroDark[filaD][columnaD] = "V";
                                 break;
+                            case "P":
+                                tableroDark[filaD][columnaD] = "L";
+                                int filaDAletoria;
+                                int columnaDAletoria;
+                                do {
+                                    filaDAletoria= random.nextInt(9);
+                                    columnaDAletoria= random.nextInt(9);
+                                }while (tableroDark[filaDAletoria][columnaDAletoria]!= "L");
+                                tableroDark[filaDAletoria][columnaDAletoria] = "V";
+                                break;
                         }
                         break;
 
@@ -973,6 +987,6 @@ public class Main {
                 turnos = false;
                 imprimirD();
             }
-        } while (vidasY == 0 || vidasV == 0 || tableroYoda[9][9] == "Y" || tableroDark[9][9] == "V") ;
+        } while (vidasY > 0||vidasV > 0||tableroYoda[9][9] != "Y"||tableroDark[9][9] != "V") ;
     }
 }
