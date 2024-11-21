@@ -12,7 +12,8 @@ public class Main {
     private static int columnaD;
     private static int fuerarango;
     private static int fuerarango2;
-
+    private static String leerY;
+    private static String leerD;
 
     private static String[][] tableroYoda = new String[Fila][Columna];
     private static String[][] tableroDark = new String[Fila][Columna];
@@ -360,7 +361,6 @@ public class Main {
         LlenarObstaculoM("M", "R", "D","P");
         LlenarJugador();
 
-
         System.out.println(filaY + " " + columnaY);
         do {
 
@@ -368,11 +368,11 @@ public class Main {
                 System.out.println("Turno YODA");
                 ImprimirY();
                 System.out.println("Dame la dirreccion");
-                String leer = sc.nextLine();
+                leerY = sc.next();
                 System.out.println("Dame el numero de movimientos (solo funciona con AWDS)");
-                int nUsu = 1;
+                int nUsu = sc.nextInt();
 
-                switch (leer) {
+                switch (leerY) {
                     case "A":
                         fuerarango2 = (columnaY - nUsu + tableroYoda[0].length) % tableroYoda[0].length;
                             swiYodaAD(tableroYoda,"Y","A");
@@ -429,10 +429,10 @@ public class Main {
                 System.out.println("Turno Vader");
                 imprimirD();
                 System.out.println("Dame la dirreccion");
-                String leer = sc.nextLine();
+                leerD = sc.next();
                 System.out.println("Dame el numero de movimientos (solo funciona con AWDS)");
-                int nUsu = 1;
-                switch (leer) {
+                int nUsu = sc.nextInt();
+                switch (leerD) {
                     case "A":
                         fuerarango2 = (columnaD - nUsu + tableroDark[0].length) % tableroDark[0].length;
                         swiYodaAD(tableroDark,"V","A");
@@ -444,7 +444,6 @@ public class Main {
                     case "S":
                         fuerarango = (filaD + nUsu) % tableroDark.length;
                         swiYodaAD(tableroDark,"V","S");
-
                         break;
                     case "W":
                         fuerarango = (filaD - nUsu + tableroDark.length) % tableroDark.length;
