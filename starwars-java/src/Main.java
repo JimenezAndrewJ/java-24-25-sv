@@ -395,9 +395,7 @@ public class Main {
                 }
                 if (vidasY == 0) {
                     System.out.println("has perdido todas tus vidas Yoda");
-                }
-                if (tableroYoda[9][9] == "Y") {
-                    System.out.println("has ganado Yoda");
+                    break;
                 }
                 turnos = true;
                 ImprimirY();
@@ -456,9 +454,7 @@ public class Main {
                 }
                 if (vidasV == 0) {
                     System.out.println("has perdido todas tus vidas Vader");
-                }
-                if (tableroDark[9][9] == "V") {
-                    System.out.println("has ganado Vader");
+                    break;
                 }
                 turnos = false;
                 imprimirD();
