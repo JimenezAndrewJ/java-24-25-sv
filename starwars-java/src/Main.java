@@ -21,7 +21,7 @@ public class Main {
     static Scanner sc = new Scanner(System.in);
     static boolean turnos;
 
-    private static void swiYodaAD(String[][] matriz,String pers,String mov){
+    private static void movimientoG(String[][] matriz,String pers,String mov){
         if (matriz.equals(tableroYoda)) {
             switch (mov) {
                 case "A":
@@ -44,6 +44,9 @@ public class Main {
                             break;
                         case "F":
                             System.out.println("Fin");
+                            matriz[filaY][columnaY] = "L";
+                            columnaY = fuerarango2;
+                            matriz[filaY][columnaY] = pers;
                             break;
                         case "P":
                             matriz[filaY][columnaY].equals("L");
@@ -79,6 +82,9 @@ public class Main {
                             break;
                         case "F":
                             System.out.println("Fin");
+                            matriz[filaY][columnaY] = "L";
+                            filaY = fuerarango;
+                            matriz[filaY][columnaY] = pers;
                             break;
                         case "P":
                             matriz[filaY][columnaY] = "L";
@@ -116,8 +122,10 @@ public class Main {
                             break;
                         case "F":
                             System.out.println("Fin");
+                            matriz[filaY][columnaY] = "L";
                             filaY = fuerarango;
                             columnaY = fuerarango2;
+                            matriz[filaY][columnaY] = pers;
                             break;
                         case "P":
                             matriz[filaY][columnaY] = "L";
@@ -138,7 +146,7 @@ public class Main {
             case "A":
             case "D":
                 switch (matriz[filaD][fuerarango2]) {
-                    case "D":
+                    case "R":
                         vidasV -= 1;
                         System.out.println("Pisaste un R2D2 te quedan" + vidasV + "vidas");
                         matriz[filaD][columnaD] = "L";
@@ -155,6 +163,9 @@ public class Main {
                         break;
                     case "F":
                         System.out.println("Fin");
+                        matriz[filaD][columnaD] = "L";
+                        columnaD = fuerarango2;
+                        matriz[filaD][columnaD] = pers;
                         break;
                     case "P":
                         matriz[filaD][columnaD].equals("L");
@@ -173,7 +184,7 @@ public class Main {
             case "W":
             case "S":
                 switch (matriz[fuerarango][columnaD]) {
-                    case "D":
+                    case "R":
                         vidasV -= 1;
                         System.out.println("Pisaste un R2D2 te quedan" + vidasV + "vidas");
                         matriz[filaD][columnaD] = "L";
@@ -190,6 +201,9 @@ public class Main {
                         break;
                     case "F":
                         System.out.println("Fin");
+                        matriz[filaD][columnaD] = "L";
+                        filaD = fuerarango;
+                        matriz[filaD][columnaD] = pers;
                         break;
                     case "P":
                         matriz[filaD][columnaD] = "L";
@@ -217,7 +231,7 @@ public class Main {
                     case "M":
                         System.out.println("no se puede mover");
                         break;
-                    case "D":
+                    case "R":
                         vidasV -= 1;
                         System.out.println("Pisaste un R2D2 te quedan" + vidasV + "vidas");
                         matriz[filaD][columnaD] = "L";
@@ -227,8 +241,10 @@ public class Main {
                         break;
                     case "F":
                         System.out.println("Fin");
+                        matriz[filaD][columnaD] = "L";
                         filaD = fuerarango;
                         columnaD = fuerarango2;
+                        matriz[filaD][columnaD] = pers;
                         break;
                     case "P":
                         matriz[filaD][columnaD] = "L";
@@ -248,9 +264,6 @@ public class Main {
 
         }
     }
-
-
-
 
     private static void tableroL() {//Llenar tableros de L
         for (int i = 0; i < Fila; i++) {
@@ -301,7 +314,7 @@ public class Main {
         tableroDark[filaD][columnaD] = "V";
     }
 
-    private static void LlenarObstaculoM(String Muro, String Vader, String Yoda, String Poti) {
+    private static void LlenarObstaculoM(String[][] matriz,String Muro) {
         int filaM;
         int columnaM;
         //llenar tabla de muros
@@ -309,46 +322,8 @@ public class Main {
             do {
                 filaM = random.nextInt(10 - 1);
                 columnaM = random.nextInt(10 - 1);
-            } while (tableroDark[filaM][columnaM] != "L");
-            tableroDark[filaM][columnaM] = Muro;
-        }
-        for (int i = 0; i < Obstaculos; i++) {
-            do {
-                filaM = random.nextInt(10 - 1);
-                columnaM = random.nextInt(10 - 1);
-            } while (tableroYoda[filaM][columnaM] != "L");
-            tableroYoda[filaM][columnaM] = Muro;
-        }
-
-        //llenar tabla de R2D2
-        for (int i = 0; i < Obstaculos; i++) {
-            do {
-                filaM = random.nextInt(10 - 1);
-                columnaM = random.nextInt(10 - 1);
-            } while (tableroDark[filaM][columnaM] != "L");
-            tableroDark[filaM][columnaM] = Vader;
-        }
-        //Llenar tabla de DarkMaul
-        for (int i = 0; i < Obstaculos; i++) {
-            do {
-                filaM = random.nextInt(10 - 1);
-                columnaM = random.nextInt(10 - 1);
-            } while (tableroYoda[filaM][columnaM] != "L");
-            tableroYoda[filaM][columnaM] = Yoda;
-        }
-        for (int i = 0; i < Obstaculos; i++) {
-            do {
-                filaM = random.nextInt(10 - 1);
-                columnaM = random.nextInt(10 - 1);
-            } while (tableroYoda[filaM][columnaM] != "L");
-            tableroYoda[filaM][columnaM] = Poti;
-        }
-        for (int i = 0; i < Obstaculos; i++) {
-            do {
-                filaM = random.nextInt(10 - 1);
-                columnaM = random.nextInt(10 - 1);
-            } while (tableroDark[filaM][columnaM] != "L");
-            tableroDark[filaM][columnaM] = Poti;
+            } while (matriz[filaM][columnaM] != "L");
+            matriz[filaM][columnaM] = Muro;
         }
     }
 
@@ -358,12 +333,16 @@ public class Main {
 
         tableroL();
         fin();
-        LlenarObstaculoM("M", "R", "D","P");
+        LlenarObstaculoM(tableroDark, "M");
+        LlenarObstaculoM(tableroDark,"P");
+        LlenarObstaculoM(tableroDark,"R");
+        LlenarObstaculoM(tableroYoda,"M");
+        LlenarObstaculoM(tableroYoda,"P");
+        LlenarObstaculoM(tableroYoda,"D");
         LlenarJugador();
 
         System.out.println(filaY + " " + columnaY);
         do {
-
             while (turnos == false) {
                 System.out.println("Turno YODA");
                 ImprimirY();
@@ -375,42 +354,42 @@ public class Main {
                 switch (leerY) {
                     case "A":
                         fuerarango2 = (columnaY - nUsu + tableroYoda[0].length) % tableroYoda[0].length;
-                            swiYodaAD(tableroYoda,"Y","A");
+                            movimientoG(tableroYoda,"Y","A");
                         break;
                     case "D":
                         fuerarango2 = (columnaY + nUsu + tableroYoda[0].length) % tableroYoda[0].length;
-                            swiYodaAD(tableroYoda,"Y","D");
+                        movimientoG(tableroYoda,"Y","D");
                         break;
                     case "S":
                         fuerarango = (filaY + nUsu) % tableroYoda.length;
-                        swiYodaAD(tableroYoda,"Y","S");
+                        movimientoG(tableroYoda,"Y","S");
 
                         break;
                     case "W":
                         fuerarango = (filaY - nUsu + tableroYoda.length) % tableroYoda.length;
-                        swiYodaAD(tableroYoda,"Y","S");;
+                        movimientoG(tableroYoda,"Y","S");;
                         break;
                     case "Q":
                         fuerarango = (filaY - nUsu + tableroYoda.length) % tableroYoda.length;
                         fuerarango2 = (columnaY - nUsu + tableroYoda[0].length) % tableroYoda[0].length;
-                        swiYodaAD(tableroYoda,"Y","Q");
+                        movimientoG(tableroYoda,"Y","Q");
                         break;
                     case "E":
                         fuerarango = (filaY - nUsu + tableroYoda.length) % tableroYoda.length;
                         fuerarango2 = (columnaY + nUsu) % tableroYoda[0].length;
 
-                        swiYodaAD(tableroYoda,"Y","Q");
+                        movimientoG(tableroYoda,"Y","Q");
                         break;
                     case "Z":
                         fuerarango = (filaY + nUsu ) % tableroYoda.length;
                         fuerarango2 = (columnaY - nUsu + tableroYoda[0].length) % tableroYoda[0].length;
 
-                        swiYodaAD(tableroYoda,"Y","Q");
+                        movimientoG(tableroYoda,"Y","Q");
                         break;
                     case "C":
                         fuerarango = (filaY + nUsu) % tableroYoda.length;
                         fuerarango2 = (columnaY + nUsu) % tableroYoda[0].length;
-                        swiYodaAD(tableroYoda,"Y","Q");
+                        movimientoG(tableroYoda,"Y","Q");
 
                         break;
                 }
@@ -424,7 +403,10 @@ public class Main {
                 ImprimirY();
                 System.out.println(filaY + " " + columnaY);
             }
-
+            if (tableroYoda[9][9].equals("Y")) {
+                System.out.println("¡Yoda ha llegado a la meta! Terminando el juego.");
+                break; // Salir del bucle
+            }
             while (turnos) {
                 System.out.println("Turno Vader");
                 imprimirD();
@@ -435,42 +417,41 @@ public class Main {
                 switch (leerD) {
                     case "A":
                         fuerarango2 = (columnaD - nUsu + tableroDark[0].length) % tableroDark[0].length;
-                        swiYodaAD(tableroDark,"V","A");
+                        movimientoG(tableroDark,"V","A");
                         break;
                     case "D":
                         fuerarango2 = (columnaD + nUsu + tableroDark[0].length) % tableroDark[0].length;
-                        swiYodaAD(tableroDark,"V","D");
+                        movimientoG(tableroDark,"V","D");
                         break;
                     case "S":
                         fuerarango = (filaD + nUsu) % tableroDark.length;
-                        swiYodaAD(tableroDark,"V","S");
+                        movimientoG(tableroDark,"V","S");
                         break;
                     case "W":
                         fuerarango = (filaD - nUsu + tableroDark.length) % tableroDark.length;
-                        swiYodaAD(tableroDark,"V","S");;
+                        movimientoG(tableroDark,"V","S");;
                         break;
                     case "Q":
                         fuerarango = (filaD - nUsu + tableroDark.length) % tableroDark.length;
                         fuerarango2 = (columnaD - nUsu + tableroDark[0].length) % tableroDark[0].length;
-                        swiYodaAD(tableroDark,"V","Q");
+                        movimientoG(tableroDark,"V","Q");
                         break;
                     case "E":
                         fuerarango = (filaD - nUsu + tableroDark.length) % tableroDark.length;
                         fuerarango2 = (columnaD + nUsu) % tableroDark[0].length;
 
-                        swiYodaAD(tableroDark,"V","Q");
+                        movimientoG(tableroDark,"V","Q");
                         break;
                     case "Z":
                         fuerarango = (filaD + nUsu ) % tableroDark.length;
                         fuerarango2 = (columnaD - nUsu + tableroDark[0].length) % tableroDark[0].length;
 
-                        swiYodaAD(tableroDark,"V","Q");
+                        movimientoG(tableroDark,"V","Q");
                         break;
                     case "C":
                         fuerarango = (filaD + nUsu) % tableroDark.length;
                         fuerarango2 = (columnaD + nUsu) % tableroDark[0].length;
-                        swiYodaAD(tableroDark,"V","Q");
-
+                        movimientoG(tableroDark,"V","Q");
                         break;
                 }
                 if (vidasV == 0) {
@@ -482,6 +463,10 @@ public class Main {
                 turnos = false;
                 imprimirD();
             }
-        } while (vidasY > 0||vidasV > 0||tableroYoda[9][9] != "Y"||tableroDark[9][9] != "V") ;
+            if (tableroDark[9][9].equals("V")) {
+                System.out.println("¡Vader ha llegado a la meta! Terminando el juego.");
+                break; // Salir del bucle
+            }
+        } while(vidasY > 0||vidasV > 0||!tableroYoda[9][9].equals("Y")||!tableroYoda[9][9].equals("V")) ;
     }
 }
