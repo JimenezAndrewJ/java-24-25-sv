@@ -15,7 +15,7 @@ public class Main {
             int B = scanner.nextInt();
             int C = scanner.nextInt();
 
-            if (A >= -10000 && A <= 10000 && B >= -10000 && B <= 10000 && C >= -10000 && C <= 10000) {
+            if (A >= -10000 && A <= 10000 && B >= -10000 && B <= 10000 && C >= -10000 && C <= 10000 ) {
                 break; // sale cuando los años son validos
             } else {
                 System.out.println("Error: Todos los años deben estar entre -10000 y 10000.");
