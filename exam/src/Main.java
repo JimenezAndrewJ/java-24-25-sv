@@ -86,19 +86,19 @@ public class Main {
             System.out.println();
         }
         System.out.println();
-
+//**
         for (int i = 1; i < 11; i++) {
-            int max = 0;
             for (int j = 3; j < 13; j++) {
-                for (int k = j + 1; k < 13; k++) {
-                    if (Integer.parseInt(votaciones[i][j]) < Integer.parseInt(votaciones[i][k])) {
-                        max = Integer.parseInt(votaciones[i][k]);
-                        votaciones[i][k]=votaciones[i][j];
-                        votaciones[i][j]=String.valueOf(max);
+                for (int k = 3; k < 12; k++) {
+                    if (Integer.parseInt(votaciones[i][k]) < Integer.parseInt(votaciones[i][k+1])) {
+                       String max = votaciones[i][k];
+                        votaciones[i][k]=votaciones[i][k+1];
+                        votaciones[i][k+1]=max;
                     }
                 }
             }
         }
+        //**
         for (int i = 0; i < 11; i++) {
             for (int j = 0; j < 13; j++) {
                 System.out.print(votaciones[i][j]+" ");
