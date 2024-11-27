@@ -65,7 +65,9 @@ public class Main {
             System.out.println();
         }
         System.out.println();
+
         for (int i = 0; i < 13; i++) {
+
             for (int j = 1; j < 11; j++) {
                 for (int k = 3; k < 13; k++) {
                     for (int l = k+1; l < 13; l++) {
@@ -77,8 +79,36 @@ public class Main {
                 }
             }
         }
+/*
+        int numAletorio=0;
+            for (int j = 1; j < 11; j++) {
+                for (int k = 4; k < 13; k++) {
+                    int sw;
+                    sw=0;
+                    do {
+                        for (int l = 3; l <= k-1; l++) {
+                            numAletorio = Integer.parseInt(votaciones[j][l]) ;
+                           // System.out.println(numAletorio);
+                            //System.out.println(votaciones[j][k]);
+                            if (votaciones[j][k].equals(String.valueOf(numAletorio))){
+                                    numAletorio = puntuaciones[ale.nextInt(puntuaciones.length)];
 
+                                    sw=0;
+                                    l=3;
+                            }
+                            else {
+                                sw = 1;
+                            }
 
+                        }
+                    } while (sw==0);
+                    //System.out.println(numAletorio);
+                    votaciones[j][k]=String.valueOf(numAletorio);
+
+                }
+            }
+
+*/
         for (int i = 0; i < 11; i++) {
             for (int j = 0; j < 13; j++) {
                 System.out.print(votaciones[i][j]+" ");
