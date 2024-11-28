@@ -23,6 +23,32 @@ public class Main {
             }
         }
     }
+
+    private static void saltoEnemigos(int cant,String[][] matriz,String obstaculo ){
+        for (int i = 0; i < cant; i++) {
+            int filAle,colAle;
+            do {
+                filAle = ale.nextInt(10);
+                colAle = ale.nextInt(10);
+            }while(!matriz[filAle][colAle].equals("L") );
+            matriz[filAle][colAle]="0";
+        }
+        for (int i = 0; i < fila; i++) {
+            for (int j = 0; j < columna; j++) {
+                if (matriz[i][j].equals(obstaculo)){
+                    matriz[i][j]="L";
+                }
+            }
+        }
+            for (int i = 0; i < fila; i++) {
+                for (int j = 0; j < columna; j++) {
+                    if (matriz[i][j].equals("0")){
+                        matriz[i][j]=obstaculo;
+                    }
+                }
+        }
+    }
+
     private static void imprimirJugadores(String[][] matriz1,String[][] matriz2, String pers1,String pers2){
 
 
@@ -171,98 +197,101 @@ llenarTablero(tablaY);
             limitesDark(posicion,numMovimientos);
         }
 
-switch (cambio) {
-    case true:
-        switch (tablaY[filcheck][colcheck]) {
-            case "L":
-                tablaY[filAleY][colAleY] = "L";
-                tablaY[filcheck][colcheck] = "Y";
-                filAleY = filcheck;
-                colAleY = colcheck;
-                break;
-            case "M":
-                System.out.println("no se puede mover hay un muro");
-                break;
-            case "P":
-                System.out.println("pisaste una poti enderpearl");
-                tablaY[filAleY][colAleY] = "L";
-                do {
-                    filAleY = ale.nextInt(10);
-                    colAleY = ale.nextInt(10);
-                } while ((tablaY[filAleY][colAleY] != "L"));
-                tablaY[filAleY][colAleY] = "Y";
+            if (cambio) {
+                switch (tablaY[filcheck][colcheck]) {
+                    case "L":
+                        tablaY[filAleY][colAleY] = "L";
+                        tablaY[filcheck][colcheck] = "Y";
+                        filAleY = filcheck;
+                        colAleY = colcheck;
+                        break;
+                    case "M":
+                        System.out.println("no se puede mover hay un muro");
+                        break;
+                    case "P":
+                        System.out.println("pisaste una poti enderpearl");
+                        tablaY[filAleY][colAleY] = "L";
+                        do {
+                            filAleY = ale.nextInt(10);
+                            colAleY = ale.nextInt(10);
+                        } while ((tablaY[filAleY][colAleY] != "L"));
+                        tablaY[filAleY][colAleY] = "Y";
 
-                break;
-            case "D":
-                --vidasY;
-                System.out.println("pisaste un dark perdiste una vida te quedan: " + vidasY);
-                tablaY[filAleY][colAleY] = "L";
-                tablaY[filcheck][colcheck] = "Y";
-                filAleY = filcheck;
-                colAleY = colcheck;
-                break;
-            case "F":
-                tablaY[filAleY][colAleY] = "L";
-                tablaY[filcheck][colcheck] = "Y";
-                filAleY = filcheck;
-                colAleY = colcheck;
-                break;
-        }
-        imprimirTablero(tablaY);
-        if (tablaY[9][9].equals("Y")) {
-            System.out.println("Ganaste Yoda");
-            break;
-        }
-        cambio = false;
-        System.out.println("TURNO DE VADER");
-        imprimirTablero(tablaD);
-        break;
-    case false:
-        switch (tablaD[filcheck][colcheck]) {
-            case "L":
-                tablaD[filAleD][colAleD] = "L";
-                tablaD[filcheck][colcheck] = "V";
-                filAleD = filcheck;
-                colAleD = colcheck;
-                break;
-            case "M":
-                System.out.println("no se puede mover hay un muro");
-                break;
-            case "P":
-                System.out.println("pisaste una poti enderpearl");
-                tablaD[filAleD][colAleD] = "L";
-                do {
-                    filAleD = ale.nextInt(10);
-                    colAleD = ale.nextInt(10);
-                } while ((tablaD[filAleD][colAleD] != "L"));
-                tablaD[filAleD][colAleD] = "V";
+                        break;
+                    case "D":
+                        --vidasY;
+                        System.out.println("pisaste un dark perdiste una vida te quedan: " + vidasY);
+                        tablaY[filAleY][colAleY] = "L";
+                        tablaY[filcheck][colcheck] = "Y";
+                        filAleY = filcheck;
+                        colAleY = colcheck;
+                        break;
+                    case "F":
+                        tablaY[filAleY][colAleY] = "L";
+                        tablaY[filcheck][colcheck] = "Y";
+                        filAleY = filcheck;
+                        colAleY = colcheck;
+                        break;
+                }
+                saltoEnemigos(5,tablaY,"D");
+                imprimirTablero(tablaY);
+                if (tablaY[9][9].equals("Y")) {
+                    System.out.println("Ganaste Yoda");
+                    continue;
+                }
+                cambio = false;
 
-                break;
-            case "D":
-                --vidasY;
-                System.out.println("pisaste un dark perdiste una vida te quedan: " + vidasD);
-                tablaD[filAleD][colAleD] = "L";
-                tablaD[filcheck][colcheck] = "V";
-                filAleD = filcheck;
-                colAleD = colcheck;
-                break;
-            case "F":
-                tablaD[filAleD][colAleD] = "L";
-                tablaD[filcheck][colcheck] = "V";
-                filAleD = filcheck;
-                colAleD = colcheck;
-                break;
-        }
-        imprimirTablero(tablaD);
-        if (tablaD[9][9].equals("V")) {
-            System.out.println("Ganaste Vader");
-            break;
-        }
-        System.out.println("Turno de Yoda");
-        imprimirTablero(tablaY);
-cambio = true;
-        break;
-}
+
+                System.out.println("TURNO DE VADER");
+                imprimirTablero(tablaD);
+
+            } else if (!(cambio)) {
+                switch (tablaD[filcheck][colcheck]) {
+                    case "L":
+                        tablaD[filAleD][colAleD] = "L";
+                        tablaD[filcheck][colcheck] = "V";
+                        filAleD = filcheck;
+                        colAleD = colcheck;
+                        break;
+                    case "M":
+                        System.out.println("no se puede mover hay un muro");
+                        break;
+                    case "P":
+                        System.out.println("pisaste una poti enderpearl");
+                        tablaD[filAleD][colAleD] = "L";
+                        do {
+                            filAleD = ale.nextInt(10);
+                            colAleD = ale.nextInt(10);
+                        } while ((tablaD[filAleD][colAleD] != "L"));
+                        tablaD[filAleD][colAleD] = "V";
+
+                        break;
+                    case "D":
+                        --vidasY;
+                        System.out.println("pisaste un dark perdiste una vida te quedan: " + vidasD);
+                        tablaD[filAleD][colAleD] = "L";
+                        tablaD[filcheck][colcheck] = "V";
+                        filAleD = filcheck;
+                        colAleD = colcheck;
+                        break;
+                    case "F":
+                        tablaD[filAleD][colAleD] = "L";
+                        tablaD[filcheck][colcheck] = "V";
+                        filAleD = filcheck;
+                        colAleD = colcheck;
+                        break;
+                }
+                saltoEnemigos(5,tablaD,"R");
+                imprimirTablero(tablaD);
+                if (tablaD[9][9].equals("V")) {
+                    System.out.println("Ganaste Vader");
+                    continue;
+                }
+                System.out.println("Turno de Yoda");
+                imprimirTablero(tablaY);
+                cambio = true;
+
+            }
 
         }while (vidasY!=0||vidasD!=0);
         }
